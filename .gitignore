@@ -1,0 +1,58 @@
+# ─── Dependencies ───────────────────────────────────────────
+node_modules/
+.pnp
+.pnp.js
+
+# ─── Build output ───────────────────────────────────────────
+dist/
+build/
+out-tsc/
+bazel-out/
+tmp/
+
+# ─── Angular ────────────────────────────────────────────────
+.angular/cache/
+.sass-cache/
+connect.lock
+libpeerconnection.log
+testem.log
+/typings
+
+# ─── Tests / coverage ───────────────────────────────────────
+coverage/
+.nyc_output/
+__screenshots__/
+
+# ─── Environment / secrets ──────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ─── Logs ───────────────────────────────────────────────────
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ─── TypeScript ─────────────────────────────────────────────
+*.tsbuildinfo
+
+# ─── Editors / IDE ──────────────────────────────────────────
+.idea/
+*.swp
+*.sublime-*
+.history/
+
+# Keep the shared VS Code configs, ignore the rest
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/mcp.json
+
+# ─── OS ─────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
