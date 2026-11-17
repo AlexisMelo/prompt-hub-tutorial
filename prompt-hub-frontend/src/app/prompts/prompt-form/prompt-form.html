@@ -1,0 +1,42 @@
+<p-card>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="field">
+      <label for="title">Titre</label>
+      <input formControlName="title" type="text" id="title" class="w-full" pInputText />
+      <small class="invalid-feedback">Le titre est requis (max 30 caractères)</small>
+    </div>
+
+    <div>
+      <label for="content">Contenu</label>
+      <textarea formControlName="content" pTextarea id="content" class="w-full"></textarea>
+      <small class="invalid-feedback">Le contenu est requis</small>
+    </div>
+
+    <div>
+      <label for="category">Categorie</label>
+      <p-select
+        formControlName="categoryId"
+        inputId="category"
+        class="w-full"
+        [options]="categories()"
+        optionValue="id"
+        optionLabel="name"
+      ></p-select>
+      <small class="invalid-feedback">La catégorie est requise</small>
+    </div>
+
+    <div class="flex justify-content-end p-2 gap-2">
+      @if (promptId()) {
+        <p-button
+          class="mr-auto"
+          [outlined]="true"
+          label="Supprimer"
+          severity="danger"
+          (onClick)="deletePrompt()"
+        />
+      }
+      <p-button label="Annuler" severity="secondary" [routerLink]="'/'" />
+      <p-button [label]="promptId() ? 'Modifier' : 'Créer'" type="submit" />
+    </div>
+  </form>
+</p-card>
