@@ -32,6 +32,11 @@
       "id": 1,
       "username": "Système",
       "passwordHash": "$2b$10$placeholder.no.login.system.user.xYz123456789"
+    },
+    {
+      "id": 4,
+      "username": "alexis",
+      "passwordHash": "$2b$10$A/GBKyq.E57nWP/tuR6OluKfra4ERMzpM/tW840JsnKevpkt27bOi"
     }
   ],
   "prompts": [
@@ -79,6 +84,15 @@
       "userId": 1,
       "score": 0,
       "createdAt": "2026-11-17T14:29:50.591Z"
+    },
+    {
+      "id": 7,
+      "title": "safzfz",
+      "content": "efzfezzefz",
+      "categoryId": 3,
+      "userId": 4,
+      "score": 0,
+      "createdAt": "2026-11-17T15:45:30.997Z"
     }
   ],
   "votes": [

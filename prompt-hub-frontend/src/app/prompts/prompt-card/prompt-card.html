@@ -5,12 +5,14 @@
       <div class="text-sm text-color-secondary">&#64;{{ prompt().author.username }}</div>
     </div>
     <div class="flex gap-2">
-      <p-button
-        icon="pi pi-pencil"
-        size="small"
-        [text]="true"
-        [routerLink]="[prompt().id, 'edit']"
-      />
+      @if (canEdit()) {
+        <p-button
+          icon="pi pi-pencil"
+          size="small"
+          [text]="true"
+          [routerLink]="[prompt().id, 'edit']"
+        />
+      }
       <p-button icon="pi pi-copy" (onClick)="copyToClipboard()" size="small" [text]="true" />
     </div>
   </div>
