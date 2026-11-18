@@ -4,15 +4,19 @@ import { PromptCard } from '../prompt-card/prompt-card'
 import { PromptService } from '../prompt-service'
 import { AsyncPipe } from '@angular/common'
 import { toSignal } from '@angular/core/rxjs-interop'
+import { tap } from 'rxjs'
+import { ProgressSpinner } from 'primeng/progressspinner'
 
 @Component({
   selector: 'app-prompt-list',
-  imports: [PromptCard],
+  imports: [PromptCard, ProgressSpinner],
   templateUrl: './prompt-list.html',
   styleUrl: './prompt-list.scss',
 })
 export class PromptList {
   private promptService = inject(PromptService)
-
-  prompts = toSignal(this.promptService.getPrompts(), { initialValue: [] })
+  loading = signal(true)
+  prompts = toSignal(this.promptService.getPrompts().pipe(tap(() => this.loading.set(false))), {
+    initialValue: [],
+  })
 }

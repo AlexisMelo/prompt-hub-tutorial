@@ -6,6 +6,7 @@ import { InputText } from 'primeng/inputtext'
 import { Password } from 'primeng/password'
 import { AuthService } from '../auth-service'
 import { Router } from '@angular/router'
+import { MessageService } from 'primeng/api'
 
 @Component({
   selector: 'app-auth-form',
@@ -17,6 +18,9 @@ export class AuthForm {
   mode = signal<'login' | 'register'>('login')
 
   authService = inject(AuthService)
+  messageService = inject(MessageService)
+
+  submitting = signal(false)
 
   router = inject(Router)
 
@@ -37,6 +41,7 @@ export class AuthForm {
     if (this.form.invalid) return
 
     const { password, username } = this.form.getRawValue()
+    this.submitting.set(true)
     if (this.mode() === 'login') {
       this.login(username, password)
     } else {
@@ -45,7 +50,20 @@ export class AuthForm {
   }
 
   login(username: string, password: string) {
-    this.authService.login(username, password).subscribe(() => this.router.navigate(['/']))
+    this.authService.login(username, password).subscribe({
+      error: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erreur',
+          detail: 'Connexion impossible, réessayez',
+        })
+        this.submitting.set(false)
+      },
+      next: () => {
+        void this.router.navigate(['/'])
+        this.submitting.set(false)
+      },
+    })
   }
 
   register(username: string, password: string) {

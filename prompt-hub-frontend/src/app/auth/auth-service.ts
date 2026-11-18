@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { inject, Injectable, signal } from '@angular/core'
 import { environment } from '../../environments/environment'
 import { CurrentUser } from './current-user.model'
-import { catchError, of, tap } from 'rxjs'
+import { catchError, delay, of, tap } from 'rxjs'
 
 @Injectable({
   providedIn: 'root',
@@ -24,20 +24,25 @@ export class AuthService {
   }
 
   login(username: string, password: string) {
-    return this.httpClient
-      .post<CurrentUser>(`${this.baseUrl}/login`, { username, password })
-      .pipe(tap((currentUser) => this.currentUser.set(currentUser)))
+    return this.httpClient.post<CurrentUser>(`${this.baseUrl}/login`, { username, password }).pipe(
+      tap((currentUser) => this.currentUser.set(currentUser)),
+      delay(3000),
+    )
   }
 
   register(username: string, password: string) {
     return this.httpClient
       .post<CurrentUser>(`${this.baseUrl}/register`, { username, password })
-      .pipe(tap((currentUser) => this.currentUser.set(currentUser)))
+      .pipe(
+        tap((currentUser) => this.currentUser.set(currentUser)),
+        delay(3000),
+      )
   }
 
   logout() {
-    return this.httpClient
-      .post(`${this.baseUrl}/logout`, {})
-      .pipe(tap(() => this.currentUser.set(undefined)))
+    return this.httpClient.post(`${this.baseUrl}/logout`, {}).pipe(
+      tap(() => this.currentUser.set(undefined)),
+      delay(3000),
+    )
   }
 }

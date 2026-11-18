@@ -46,7 +46,7 @@
       "content": "Écris un post LinkedIn court (150–200 mots) qui :\n\n- commence par une accroche question ou chiffre\n- partage une idée concrète ou une leçon apprise\n- se termine par un call-to-action (question ou invitation à commenter)\n\nTon professionnel mais humain.",
       "categoryId": 2,
       "userId": 2,
-      "score": 1,
+      "score": 0,
       "createdAt": "2025-01-20T14:30:00.000Z"
     },
     {
@@ -93,6 +93,15 @@
       "userId": 4,
       "score": 0,
       "createdAt": "2026-11-17T15:45:30.997Z"
+    },
+    {
+      "id": 8,
+      "title": "dzeeee",
+      "content": "eeeeeeeeeeeee",
+      "categoryId": 1,
+      "userId": 4,
+      "score": 0,
+      "createdAt": "2026-11-18T09:07:43.753Z"
     }
   ],
   "votes": [
@@ -100,6 +109,11 @@
       "promptId": 2,
       "userId": 2,
       "type": "up"
+    },
+    {
+      "promptId": 2,
+      "userId": 4,
+      "type": "down"
     }
   ]
 }

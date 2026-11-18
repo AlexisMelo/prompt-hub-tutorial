@@ -1,4 +1,4 @@
-import { Component, effect, inject, input } from '@angular/core'
+import { Component, effect, inject, input, signal } from '@angular/core'
 import { Card } from 'primeng/card'
 import { InputText } from 'primeng/inputtext'
 import { Select } from 'primeng/select'
@@ -9,10 +9,21 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Button } from 'primeng/button'
 import { PromptService } from '../prompt-service'
 import { Router, RouterLink } from '@angular/router'
+import { MessageService } from 'primeng/api'
+import { ProgressSpinner } from 'primeng/progressspinner'
 
 @Component({
   selector: 'app-prompt-form',
-  imports: [Card, InputText, Textarea, Select, ReactiveFormsModule, Button, RouterLink],
+  imports: [
+    Card,
+    InputText,
+    Textarea,
+    Select,
+    ReactiveFormsModule,
+    Button,
+    RouterLink,
+    ProgressSpinner,
+  ],
   templateUrl: './prompt-form.html',
   styleUrl: './prompt-form.scss',
 })
@@ -20,8 +31,13 @@ export class PromptForm {
   categoryService = inject(CategoryService)
   promptService = inject(PromptService)
   router = inject(Router)
+  messageService = inject(MessageService)
 
   promptId = input<number>()
+
+  submitting = signal(false)
+  deleting = signal(false)
+  loading = signal(false)
 
   categories = toSignal(this.categoryService.getCategories(), { initialValue: [] })
 
@@ -41,13 +57,15 @@ export class PromptForm {
     effect(() => {
       const promptId = this.promptId()
       if (promptId) {
-        this.promptService.getPrompt(promptId).subscribe((prompt) =>
+        this.loading.set(true)
+        this.promptService.getPrompt(promptId).subscribe((prompt) => {
           this.form.patchValue({
             title: prompt.title,
             content: prompt.content,
             categoryId: prompt.category.id,
-          }),
-        )
+          })
+          this.loading.set(false)
+        })
       }
     })
   }
@@ -59,20 +77,41 @@ export class PromptForm {
     const prompt = this.form.getRawValue()
     const promptId = this.promptId()
 
+    this.submitting.set(true)
+
     if (promptId) {
       this.promptService.updatePrompt(promptId, prompt).subscribe(() => {
         this.router.navigate(['/'])
+        this.submitting.set(false)
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Modifié',
+          detail: 'Prompt modifié avec succès !',
+        })
       })
     } else {
       this.promptService.createPrompt(prompt).subscribe(() => {
         this.router.navigate(['/'])
+        this.submitting.set(false)
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Créé',
+          detail: 'Prompt créé avec succès !',
+        })
       })
     }
   }
 
   deletePrompt() {
+    this.deleting.set(true)
     this.promptService.deletePromp(this.promptId()!).subscribe(() => {
       void this.router.navigate(['/'])
+      this.deleting.set(false)
+      this.messageService.add({
+        severity: 'success',
+        summary: 'Supprimé',
+        detail: 'Prompt supprimé avec succès !',
+      })
     })
   }
 }

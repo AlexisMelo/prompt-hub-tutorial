@@ -20,10 +20,12 @@
         severity="secondary"
         (onClick)="toggleMode()"
         [label]="mode() === 'login' ? 'Créer un compte' : 'Se connecter'"
+        [loading]="submitting()"
       ></p-button>
       <p-button
         type="submit"
         [label]="mode() === 'login' ? 'Connexion' : 'Créer le compte'"
+        [loading]="submitting()"
       ></p-button>
     </div>
   </form>

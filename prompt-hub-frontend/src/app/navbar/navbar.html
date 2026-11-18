@@ -13,6 +13,7 @@
           routerLink="/auth"
           label="Déconnexion"
           size="small"
+          [loading]="loggingOut()"
         />
       } @else {
         <p-button severity="secondary" routerLink="/auth" label="Connexion" size="small" />
